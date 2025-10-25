@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selamat Ulang Tahun 🎉</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(to bottom right, #ffdee9, #b5fffc);
+      font-family: "Poppins", sans-serif;
+    }
+
+    /* Pembuka */
+    #opening {
+      text-align: center;
+      animation: fadeIn 1.5s ease;
+    }
+
+    #opening h1 {
+      font-size: 2em;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    #openBtn {
+      background: #ff7eb3;
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #openBtn:hover {
+      background: #ff568f;
+      transform: scale(1.05);
+    }
+
+    /* Konten utama */
+    #mainContent {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      animation: fadeIn 1.2s ease forwards;
+    }
+
+    #mainContent h2 {
+      font-size: 2.5em;
+      color: #ff2e63;
+      text-shadow: 2px 2px #fff;
+      margin-bottom: 15px;
+    }
+
+    #mainContent p {
+      font-size: 1.2em;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    /* Tombol musik */
+    #musicBtn {
+      background: #fff;
+      color: #ff2e63;
+      border: 2px solid #ff2e63;
+      border-radius: 25px;
+      padding: 8px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    #musicBtn:hover {
+      background: #ff2e63;
+      color: #fff;
+    }
+
+    /* Balon */
+    .balloon {
+      width: 40px;
+      height: 50px;
+      border-radius: 50%;
+      position: absolute;
+      bottom: -60px;
+      animation: float 7s ease-in infinite;
+      opacity: 0.9;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.1); opacity: 0; }
+    }
+
+    /* Fade effect */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div id="opening">
+    <h1>just press the button 🎁</h1>
+    <button id="openBtn">Hit Me</button>
+  </div>
+
+  <div id="mainContent">
+    <h2>🎉 -1, HBD 4 U 🎉</h2>
+    <p>Make your own wishes, and keep living with a smile 
+     
+    </p>
+    <p> "sory to late send this"</p>
+    <button id="musicBtn">🔊 Matikan Musik</button>
+  </div>
+
+  <!-- Musik -->
+  <audio id="bgMusic" src="nsh.mp3" preload="auto" loop></audio>
+
+  <script>
+    const openBtn = document.getElementById("openBtn");
+    const opening = document.getElementById("opening");
+    const mainContent = document.getElementById("mainContent");
+    const bgMusic = document.getElementById("bgMusic");
+    const musicBtn = document.getElementById("musicBtn");
+
+    openBtn.addEventListener("click", () => {
+      opening.style.display = "none";
+      mainContent.style.display = "flex";
+      bgMusic.play();
+      createBalloons(30);
+      createConfetti(50);
+    });
+
+    let musicPlaying = true;
+    musicBtn.addEventListener("click", () => {
+      if (musicPlaying) {
+        bgMusic.pause();
+        musicBtn.textContent = "🔇 Nyalakan Musik";
+      } else {
+        bgMusic.play();
+        musicBtn.textContent = "🔊 Matikan Musik";
+      }
+      musicPlaying = !musicPlaying;
+    });
+
+    // 🎈 Fungsi balon
+    function createBalloons(num) {
+      for (let i = 0; i < num; i++) {
+        const balloon = document.createElement("div");
+        balloon.classList.add("balloon");
+        balloon.style.left = Math.random() * 100 + "vw";
+        balloon.style.background = randomColor();
+        balloon.style.animationDuration = 5 + Math.random() * 5 + "s";
+        balloon.style.width = 30 + Math.random() * 20 + "px";
+        balloon.style.height = 40 + Math.random() * 25 + "px";
+        document.body.appendChild(balloon);
+
+        // hapus balon setelah animasi selesai
+        setTimeout(() => {
+          balloon.remove();
+        }, 10000);
+      }
+    }
+
+    function randomColor() {
+      const colors = ["#ff7eb3", "#ff65a3", "#7afcff", "#feff9c", "#fff740"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    // 🎊 Fungsi confetti
+    function createConfetti(num) {
+      for (let i = 0; i < num; i++) {
+        const confetti = document.createElement("div");
+        confetti.style.position = "absolute";
+        confetti.style.width = "10px";
+        confetti.style.height = "10px";
+        confetti.style.background = randomColor();
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.top = "-10px";
+        confetti.style.opacity = "0.8";
+        confetti.style.transform = "rotate(" + Math.random() * 360 + "deg)";
+        confetti.style.transition = "transform 2s, top 4s linear";
+        document.body.appendChild(confetti);
+
+        setTimeout(() => {
+          confetti.style.top = "110vh";
+          confetti.style.transform = "rotate(" + (Math.random() * 720) + "deg)";
+        }, 100);
+
+        setTimeout(() => confetti.remove(), 5000);
+      }
+    }
+  </script>
+</body>
+</html>
